@@ -60,7 +60,7 @@ class PairBarriers {
 
 
 class Barriers {
-    constructor(height, width, opening, space, notifyPoint) {
+    constructor(height, width, opening, space, notifyScore) {
         // creating 4 pairs of barriers to re-use them
         this.pairs = [
             new PairBarriers(height, opening, width),
@@ -85,13 +85,11 @@ class Barriers {
                 }
 
                 const middle = width / 2
-                const crossedTheMiddle = () => {
-                    if (pair.getX() + displacement >= middle && pair.getX() < middle) {
-                        return true
-                    }
-                    if (crossedTheMiddle)
-                        notifyPoint()
-                }
+                const crossedTheMiddle = pair.getX() + displacement >= middle
+                    && pair.getX() < middle
+
+
+                if (crossedTheMiddle) notifyScore()
             })
         }
 
@@ -115,13 +113,12 @@ class Bird {
 
         this.animate = () => {
             const newY = this.getY() + (flying ? 5 : -5)
-            const maxHeight = gameHeight - this.element.clientWidth
-
+            const maxHeight = gameHeight - this.element.clientHeight
 
             // setting the positions
             if (newY <= 0)
                 this.setY(0)
-            else if (newY >= maxHeight)
+            else if (newY >= gameHeight)
                 this.setY(maxHeight)
             else
                 this.setY(newY)
@@ -134,18 +131,51 @@ class Bird {
     }
 }
 
-const barriers = new Barriers(500 , 1200 , 200, 400)
-const bird = new Bird(500)
-const gameArea = document.querySelector('[wm-flappy]')
-gameArea.appendChild(bird.element)
-barriers.pairs.forEach(pair => {
-    gameArea.appendChild(pair.element)
 
-})
-setInterval(() => {
-    barriers.animate()
-    bird.animate()
-}, 20)
 
+class Progress {
+    constructor() {
+        this.element = newElement('span', 'progress')
+        this.updateScore = score => {
+            this.element.innerHTML = score
+        }
+        this.updateScore(0)
+
+    }
+}
+
+class FlappyBird {
+    constructor() {
+        let score = 0
+
+        const gameArea = document.querySelector('[wm-flappy]')
+        const height = gameArea.clientHeight
+        const width = gameArea.clientWidth
+
+        const progress = new Progress()
+        const barriers = new Barriers(height, width, 200, 400, () => {
+            progress.updateScore(++score)
+        })
+
+        const bird = new Bird(height)
+
+        gameArea.appendChild(bird.element)
+        gameArea.appendChild(progress.element)
+        barriers.pairs.forEach(pair => {
+            gameArea.appendChild(pair.element)
+
+        })
+
+        this.startGame = () => {
+            const timer = setInterval(() => {
+                barriers.animate()
+                bird.animate()
+            }, 20)
+        }
+
+    }
+}
+
+new FlappyBird().startGame()
 
 
