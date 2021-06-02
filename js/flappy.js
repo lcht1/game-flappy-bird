@@ -1,10 +1,25 @@
+let level = window.location.search
+console.log(level)
+level = level.replace('?', '')
+
+let timer = 10
+if (level == 'easy') timer = 28
+else if (level == 'normal') timer = 20
+else if (level == 'hard') timer = 12
+
+
 //funcao para criacao de novos elementos
 function newElement(tagName, className) {
     const elem = document.createElement(tagName)
     elem.className = className // it could be used classList too
     return elem
 }
-
+// class Cloud {
+//     constructor() {
+//         this.element.newElement('img', 'cloud')
+//         this.element.src = '../imgs/cloud.png'
+//     }
+// }
 // creating one barrier
 class Barrier {
     constructor(reverse = false) {
@@ -144,6 +159,44 @@ class Progress {
     }
 }
 
+function isOverlap(elementA, elementB) {
+    const a = elementA.getBoundingClientRect() // retangulo associado ao elemento A
+    const b = elementB.getBoundingClientRect()
+
+    const rightSideA = a.left + a.width
+    const rightSideB = b.left + b.width
+    const leftSideA = a.left 
+    const leftSideB = b.left
+
+    const horizontal = rightSideA >= leftSideB
+        && rightSideB  >= leftSideA 
+        
+
+    const bottomA = a.top + a.height
+    const bottomB = b.top + b.height
+    const topB = b.top
+    const topA = a.top
+
+    const vertical = bottomA >= topB
+        && bottomB >= topA
+
+    return horizontal && vertical
+}
+
+function collided(bird, barriers) {
+    let collided = false
+    barriers.pairs.forEach(pairBarriers => {
+        if (!collided) {
+            const upper = pairBarriers.upper.element 
+            const bottom = pairBarriers.bottom.element
+            collided = isOverlap(bird.element, upper)
+                || isOverlap(bird.element, bottom)
+        }
+    })
+
+    return collided;
+}
+
 class FlappyBird {
     constructor() {
         let score = 0
@@ -159,6 +212,9 @@ class FlappyBird {
 
         const bird = new Bird(height)
 
+
+
+
         gameArea.appendChild(bird.element)
         gameArea.appendChild(progress.element)
         barriers.pairs.forEach(pair => {
@@ -166,13 +222,28 @@ class FlappyBird {
 
         })
 
+
+        
         this.startGame = () => {
-            const timer = setInterval(() => {
+            
+            const interval = setInterval(() => {
                 barriers.animate()
                 bird.animate()
-            }, 20)
-        }
 
+                if(collided(bird, barriers)){
+                    clearInterval(interval)
+                    const audio = new Audio('../audio/gameover.wav')
+                    audio.play()
+                    setTimeout(() => {
+                        window.location.href = '../src/gameover.html'
+                        
+                    }, 1000)
+
+                } 
+                
+            }, timer)
+        }
+     
     }
 }
 

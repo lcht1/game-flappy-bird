@@ -4,7 +4,10 @@
     font-family: 'Pixel' ;
     src: url('../fonts/Pixel.ttf');
 }
-
+span {
+    font-family: 'Pixel';
+    font-size: 5rem;
+}
 [wm-flappy] {
     position: relative;
     height: 100%;
@@ -13,11 +16,40 @@
     overflow: hidden;
 }
 
+.cloud {
+    position: fixed;
+  
+}
+
+.c1 {
+    top: 100px;
+    right: 70px;
+    width:8rem;
+
+}
+
+.c2 {
+    right:  150px;
+    top: 400px;
+    width:9rem;
+}
+
+.c3 {
+    right:  800px;
+    top: 500px;
+    width:6rem;
+}
+.c4 {
+    left:  100px;
+    top: 200px;
+    width:5rem;
+}
 .bird {
     position: absolute;
     width: 3.75rem;
     left: calc(50% - 30px);
 }
+
 
 .pair-of-barriers {
     position: absolute;
@@ -38,16 +70,17 @@
 .barrier .border {
     height: 2rem;
     width:  8.125rem;
-    background: linear-gradient(90deg, #639301, #A5E82E);
-    border: 2px solid #000;
+    background: linear-gradient(90deg, #639301, #adfb26);
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 
 .barrier .body {
     height: 5rem;
     width: 6.9rem;
-    background: linear-gradient(90deg, #639301, #A5E82E);
-    border-left: 2px solid #000;
-    border-right: 2px solid #000;
+    background: linear-gradient(90deg, #639301, #adfb26);
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
 
 .progress {
@@ -57,4 +90,20 @@
     font-family: 'Pixel';
     font-size: 4.5rem;
     z-index: 100;
+}
+.form-control{
+    width: 200px;
+    height: 50px;
+    font-size: 1.25rem;
+    cursor: pointer;
+
+}
+.btn {
+    background: #0D262D;
+    color: #fff;
+    border: none;
+    width: 200px;
+    padding: 10px;
+    font-size: 2rem;
+    cursor: pointer;
 }
