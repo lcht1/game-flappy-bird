@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flappy Bird - Home</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/flappy.css" />
+    <link rel="icon" type="image/png" href="./imgs/bird.png" />
 
-<head>
-    <meta charset="UTF-8">
-    <title>Flappy Bird</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/flappy.css">
-    <link rel="icon" type="image/png" href="./imgs/bird.png">
-</head>
+    <script>
+        function start() {
+        let level = document.getElementById("level").value;
+        if (level == "") {
+          alert("Please, select a level!");
+          return false;
+        } else{
+            window.location.href = './src/app.html?' + level
+        }
+      }
+    </script>
+  </head>
 
-<body class="content">
+  <body class="content">
     <div wm-flappy>
-        
+      
+      <div class="home">
+        <div class="title">
+          <h1>Flappy Bird</h1>
+
+          <div class="img">
+            <img class="cloud c1" src="../imgs/cloud.png" alt="">
+            <img class="cloud c2" src="../imgs/cloud.png" alt="">
+            <img class="cloud c3" src="../imgs/cloud.png" alt="">
+            <img class="cloud c4" src="../imgs/cloud.png" alt="">
+        </div>
+        </div>
+        <div class="bird-img">
+          <img src="./imgs/bird.png" alt="" />
+        </div>
+        <div class="form">
+          <select class="form-control" id="level">
+            <option value="">-- Select the level --</option>
+            <option value="easy">Easy</option>
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="play-game">
+          <button class="btn" onclick="start()">Play</button>
+        </div>
+      </div>
     </div>
 
-    <script src="js/flappy.js"></script>
-</body>
-
+  </body>
 </html>

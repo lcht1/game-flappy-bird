@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flappy Bird - Home</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/flappy.css" />
+    <link rel="icon" type="image/png" href="./imgs/bird.png" />
+
+    <script>
+      function restart() {
+        window.location.href = "../index.html";
+      }
+    </script>
+  </head>
+
+  <body class="content">
+    <div wm-flappy>
+      <div class="home">
+        <div class="title">
+          <h1>Game Over</h1>
+
+          <div class="img">
+            <img class="cloud c1" src="../imgs/cloud.png" alt="" />
+            <img class="cloud c2" src="../imgs/cloud.png" alt="" />
+            <img class="cloud c3" src="../imgs/cloud.png" alt="" />
+            <img class="cloud c4" src="../imgs/cloud.png" alt="" />
+          </div>
+        </div>
+        <div class="bird-img">
+          <img src="../imgs/bird.png" alt="" />
+        </div>
+
+        <div class="score-div">
+            <span>Score <span class="score"></span> </span>
+        </div>
+        <div class="play-game">
+          <button class="btn" onclick="restart()">Restart</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
