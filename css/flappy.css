@@ -96,6 +96,7 @@ span {
     height: 50px;
     font-size: 1.25rem;
     cursor: pointer;
+    border-radius: 10px;
 
 }
 .btn {
@@ -105,5 +106,14 @@ span {
     width: 200px;
     padding: 10px;
     font-size: 2rem;
+    border-radius: 10px;
+
     cursor: pointer;
+}
+
+@media (max-width: 500px) {
+
+    .cloud {
+        display: none;
+    }
 }

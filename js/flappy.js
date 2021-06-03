@@ -14,12 +14,7 @@ function newElement(tagName, className) {
     elem.className = className // it could be used classList too
     return elem
 }
-// class Cloud {
-//     constructor() {
-//         this.element.newElement('img', 'cloud')
-//         this.element.src = '../imgs/cloud.png'
-//     }
-// }
+
 // creating one barrier
 class Barrier {
     constructor(reverse = false) {
@@ -71,9 +66,6 @@ class PairBarriers {
     }
 }
 
-
-
-
 class Barriers {
     constructor(height, width, opening, space, notifyScore) {
         // creating 4 pairs of barriers to re-use them
@@ -124,7 +116,14 @@ class Bird {
         this.setY = y => this.element.style.bottom = `${y}px`
 
         window.onkeydown = e => flying = true
+        window.onmousedown = e => flying = true
+
         window.onkeyup = e => flying = false
+        window.onmouseup =  e => flying = false
+
+        // mobile devices
+        window.ontouchstart = e => flying = true
+        window.ontouchend = e => flying = false
 
         this.animate = () => {
             const newY = this.getY() + (flying ? 5 : -5)
@@ -160,17 +159,17 @@ class Progress {
 }
 
 function isOverlap(elementA, elementB) {
-    const a = elementA.getBoundingClientRect() // retangulo associado ao elemento A
+    const a = elementA.getBoundingClientRect() 
     const b = elementB.getBoundingClientRect()
 
     const rightSideA = a.left + a.width
     const rightSideB = b.left + b.width
-    const leftSideA = a.left 
+    const leftSideA = a.left
     const leftSideB = b.left
 
     const horizontal = rightSideA >= leftSideB
-        && rightSideB  >= leftSideA 
-        
+        && rightSideB >= leftSideA
+
 
     const bottomA = a.top + a.height
     const bottomB = b.top + b.height
@@ -187,7 +186,7 @@ function collided(bird, barriers) {
     let collided = false
     barriers.pairs.forEach(pairBarriers => {
         if (!collided) {
-            const upper = pairBarriers.upper.element 
+            const upper = pairBarriers.upper.element
             const bottom = pairBarriers.bottom.element
             collided = isOverlap(bird.element, upper)
                 || isOverlap(bird.element, bottom)
@@ -212,9 +211,6 @@ class FlappyBird {
 
         const bird = new Bird(height)
 
-
-
-
         gameArea.appendChild(bird.element)
         gameArea.appendChild(progress.element)
         barriers.pairs.forEach(pair => {
@@ -223,30 +219,31 @@ class FlappyBird {
         })
 
 
-        
+
         this.startGame = () => {
-            
+            const songTheme = new Audio('../audio/song_theme.m4a')
+            songTheme.play()
+
             const interval = setInterval(() => {
                 barriers.animate()
                 bird.animate()
 
-                if(collided(bird, barriers)){
+                if (collided(bird, barriers)) {
                     clearInterval(interval)
-                    const audio = new Audio('../audio/gameover.wav')
-                    audio.play()
+                    const audioGameOver = new Audio('../audio/gameover.wav')
+                    songTheme.pause()
+                    audioGameOver.play()
                     setTimeout(() => {
                         window.location.href = '../src/gameover.html'
-                        
-                    }, 1000)
 
-                } 
+                    }, 1000)
                 
+
+                }
             }, timer)
         }
-     
+
     }
 }
 
 new FlappyBird().startGame()
-
-
