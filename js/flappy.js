@@ -1,13 +1,3 @@
-let level = window.location.search
-console.log(level)
-level = level.replace('?', '')
-
-let timer = 10
-if (level == 'easy') timer = 28
-else if (level == 'normal') timer = 20
-else if (level == 'hard') timer = 12
-
-
 //funcao para criacao de novos elementos
 function newElement(tagName, className) {
     const elem = document.createElement(tagName)
@@ -195,6 +185,15 @@ function collided(bird, barriers) {
 
     return collided;
 }
+// levels
+let level = window.location.search
+level = level.replace('?', '')
+
+let timer = 0
+if (level == 'easy') timer = 28
+else if (level == 'normal') timer = 20
+else if (level == 'hard') timer = 12
+
 
 class FlappyBird {
     constructor() {
@@ -218,8 +217,6 @@ class FlappyBird {
 
         })
 
-
-
         this.startGame = () => {
             const songTheme = new Audio('../audio/song_theme.m4a')
             songTheme.play()
@@ -241,9 +238,8 @@ class FlappyBird {
 
                 }
             }, timer)
-        }
-
-    }
-}
-
+            
+            
+        }}}
+        
 new FlappyBird().startGame()
